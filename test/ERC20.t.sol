@@ -59,6 +59,24 @@ contract ERC20Test is Test {
         assertEq(token.allowance(alice, bob), 300);
     }
 
+    function test_approve_race_condition() public {
+        vm.prank(alice);
+        token.approve(bob, 300);
+        assertEq(token.allowance(alice, bob), 300);
+
+        vm.prank(alice); // Need to pretend to be Alice again because the previous call has already reverted
+        vm.expectRevert("Need to set existing allowance to zero first");
+        token.approve(bob, 400);
+
+        vm.prank(alice);
+        token.approve(bob, 0);
+        assertEq(token.allowance(alice, bob), 0);
+
+        vm.prank(alice);
+        token.approve(bob, 400);
+        assertEq(token.allowance(alice, bob), 400);
+    }
+
     function test_transferFrom() public {
         vm.prank(alice);
         token.approve(bob, 300);
@@ -76,6 +94,4 @@ contract ERC20Test is Test {
         vm.expectRevert("Allowance exceeded");
         token.transferFrom(alice, bob, 200);
     }
-
-
 }
