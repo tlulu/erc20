@@ -3,6 +3,9 @@ pragma solidity ^0.8.13;
 
 import {IERC20} from "./IERC20.sol";
 
+/**
+ * Implementation of the ERC20 standard as defined in https://eips.ethereum.org/EIPS/eip-20
+ */
 abstract contract ERC20 is IERC20 {
     uint256 private _totalSupply;
     string private _name;
