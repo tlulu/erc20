@@ -1,3 +1,5 @@
+![Build Status](https://github.com/tlulu/erc20/actions/workflows/test.yml/badge.svg)
+
 # ERC20 Implementation
 
 A sample implementation of ERC20 using Foundry.
