@@ -2,7 +2,7 @@
 
 # ERC20 Implementation
 
-A sample implementation of ERC20 using Foundry.
+A sample implementation of ERC20 using [Foundry](https://github.com/foundry-rs/foundry).
 
 ## Getting Started
 Install Foundry
