@@ -49,7 +49,9 @@ abstract contract ERC20 is IERC20 {
         // allowance to zero by calling `approve(_spender,0)` if it is not
         // already 0 to mitigate the race condition described here:
         // https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
-        require((amount == 0) || (_allowances[msg.sender][spender] == 0), "Need to set existing allowance to zero first");
+        require(
+            (amount == 0) || (_allowances[msg.sender][spender] == 0), "Need to set existing allowance to zero first"
+        );
 
         _allowances[msg.sender][spender] = amount;
         emit Approval(msg.sender, spender, amount);
@@ -70,7 +72,7 @@ abstract contract ERC20 is IERC20 {
 
     function _mint(address account, uint256 amount) internal {
         require(account != address(0), "Cannot mint to the zero address");
-        _totalSupply += amount; 
+        _totalSupply += amount;
         _balances[account] += amount;
         emit Transfer(address(0), account, amount);
     }
