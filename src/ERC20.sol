@@ -32,6 +32,10 @@ abstract contract ERC20 is IERC20 {
         return _balances[account];
     }
 
+    function allowance(address owner, address spender) public view override returns (uint256) {
+        return _allowances[owner][spender];
+    }
+
     function transfer(address recipient, uint256 amount) public override returns (bool) {
         require(_balances[msg.sender] >= amount, "Insufficient balance");
         _balances[msg.sender] -= amount;
@@ -42,18 +46,14 @@ abstract contract ERC20 is IERC20 {
 
     function approve(address spender, uint256 amount) public override returns (bool) {
         // To change the approve amount you first have to reduce the addresses`
-        //  allowance to zero by calling `approve(_spender,0)` if it is not
-        //  already 0 to mitigate the race condition described here:
-        //  https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
+        // allowance to zero by calling `approve(_spender,0)` if it is not
+        // already 0 to mitigate the race condition described here:
+        // https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
         require((amount == 0) || (_allowances[msg.sender][spender] == 0), "Need to set existing allowance to zero first");
 
         _allowances[msg.sender][spender] = amount;
         emit Approval(msg.sender, spender, amount);
         return true;
-    }
-
-    function allowance(address owner, address spender) public view override returns (uint256) {
-        return _allowances[owner][spender];
     }
 
     function transferFrom(address sender, address recipient, uint256 amount) public override returns (bool) {
